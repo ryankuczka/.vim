@@ -34,15 +34,6 @@ Bundle 'suan/vim-instant-markdown'
 "Bundle 'flazz/vim-colorschemes'
 " }}}
 
-" {{{2 Powerline
-python import sys; sys.path.append('/Users/Ryan/Library/Python/2.7/lib/python/site-packages/')
-python from powerline.vim import setup as powerline_setup; powerline_setup()
-if has('gui_running')
-    set guifont=Menlo\ for\ Powerline:h12
-    set guioptions=egmrt
-endif
-" }}}
-
 " {{{2 YouCompleteMe
 Bundle 'Valloric/YouCompleteMe'
 
@@ -169,11 +160,6 @@ set undofile       " save/restore undo history
 set autoindent     " auto indents
 set t_RV= ttymouse=xterm2
 
-"set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
-
-if exists("+macmeta")
-    set macmeta        " allow the use of alt-option key for <M- bindings (at the cost of losing ability to type accented letters)
-endif
 set autoread       " when a file is changed by a program other than vim while a buffer is open, automatically reload it
 
 set nostartofline  " makes it so G, gg, <c-d>, etc. don't move cursor to start of the line
@@ -284,3 +270,9 @@ au BufRead,BufNewFile *.md set filetype=markdown
 let @d = '/delay_initial_importfFceTrue$@d'
 let @e = '/delay_initial_importfTceFalse$@e'
 "}}}
+
+" try to source local vimrc
+" for stuff like powerline
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
