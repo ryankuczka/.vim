@@ -175,8 +175,8 @@ set nostartofline  " makes it so G, gg, <c-d>, etc. don't move cursor to start o
 
 " {{{1 Useful Mappings
 " Make j and k work better with wrapped lines
-nmap j gj
-nmap k gk
+map j gj
+map k gk
 " Easy running of last command
 nnoremap ,: :<Up>
 " Maps Ctrl-Tab to move through tabs forward
@@ -226,6 +226,19 @@ nmap <Leader>cp :let @" = expand("%:p")<CR>
 " }}}
 
 " {{{1 Functions
+" Twiddlecase, stolen from http://vim.wikia.com/wiki/Switching_case_of_characters
+function! TwiddleCase(str)
+    if a:str ==# toupper(a:str)
+        let result = tolower(a:str)
+    elseif a:str ==# tolower(a:str)
+        let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+    else
+        let result = toupper(a:str)
+    endif
+    return result
+endfunction
+vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+
 " Function to insert a debug trace for python and javascript and map to Ctrl-i
 nnoremap <c-i> :call InsertDebugTrace()<CR>
 function! InsertDebugTrace()
@@ -268,14 +281,15 @@ map <Leader>p :call RunPython()<CR>
 " Automatically set html files to be htmldjango filetype
 au BufRead,BufNewFile *.html set filetype=htmldjango
 au BufRead,BufNewFile *.md set filetype=markdown
+au QuickFixCmdPost *grep* cwindow
 "au FileType htmldjango let g:autoclose_on=1
 "au InsertEnter,BufLeave,FocusLost *.py,*.html,*.md,*.js set nu
 "au InsertLeave,BufEnter,FocusGained *.py,*.html,*.md,*.js set rnu
 "}}}
 
 " Storing registers {{{
-let @d = '/delay_initial_importfFceTrue$@d'
-let @e = '/delay_initial_importfTceFalse$@e'
+" Copy the current line, put below, and increment number
+let @i = 'yyp'
 "}}}
 
 " try to source local vimrc
