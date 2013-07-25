@@ -21,6 +21,8 @@ nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 " close the fugitive diff pane
 nnoremap <Leader>gD <C-W>h<C-W>c
+" open the current file on github
+nnoremap <Leader>gb :Gbrowse@ryan<CR>
 " }}}
 
 " {{{2 Plug-ins with No Settings
