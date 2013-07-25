@@ -29,11 +29,11 @@ nnoremap <Leader>gb :Gbrowse@ryan<CR>
 Bundle 'The-NERD-Commenter'
 Bundle 'AutoClose'
 Bundle 'Rename2'
-Bundle 'Yggdroot/indentLine'
 Bundle 'paradigm/TextObjectify'
 Bundle 'skammer/vim-css-color'
 Bundle 'suan/vim-instant-markdown'
 "Bundle 'flazz/vim-colorschemes'
+Bundle 'Lokaltog/vim-easymotion'
 " }}}
 
 " {{{2 YouCompleteMe
@@ -44,6 +44,11 @@ set completeopt=menuone
 "let g:ycm_add_preview_to_completeopt=1
 "let g:ycm_autoclose_preview_window_after_completion=1
 "let g:ycm_autoclose_preview_window_after_insertion=1
+" }}}
+
+" {{{2 IndentLine
+Bundle 'Yggdroot/indentLine'
+let g:indentLine_char = '┊'
 " }}}
 
 " {{{2 Git Gutter
@@ -105,10 +110,10 @@ nnoremap <Leader>d$ :<C-u>%DeleteTrailingWhitespace<CR>
 let g:DeleteTrailingWhitespace = 1
 " }}}
 
-"Startify {{{
-Bundle 'mhinz/vim-startify'
-let g:startify_bookmarks = ['/Users/Ryan/.vimrc', '/sites/ycharts/apps/indicators/importers.py', '/sites/ycharts/apps/indicators/schedulers.py', '/Users/Ryan/indicator_boilerplate.py']
-"}}}
+" Color schemes {{{
+Bundle 'w0ng/vim-hybrid'
+Bundle 'chriskempson/vim-tomorrow-theme'
+" }}}
 " }}}
 
 " {{{1 Standard Options
