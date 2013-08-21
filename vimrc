@@ -10,10 +10,11 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 " {{{2 TPope Plug-Ins
-Bundle 'fugitive.vim'
-Bundle 'surround.vim'
-Bundle 'abolish.vim'
-Bundle 'unimpaired.vim'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-abolish'
+Bundle 'tpope/vim-unimpaired'
+Bundle 'tpope/vim-repeat'
 
 " open fugitives git status
 nnoremap <Leader>gs :Gstatus<CR>
