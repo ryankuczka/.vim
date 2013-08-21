@@ -37,6 +37,24 @@ Bundle 'suan/vim-instant-markdown'
 Bundle 'Lokaltog/vim-easymotion'
 " }}}
 
+" {{{2 Airline
+Bundle 'bling/vim-airline'
+" Enable powerline fonts
+let g:airline_powerline_fonts=1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline#extensions#branch#symbol = ' '
+let g:airline#extensions#readonly#symbol = ''
+let g:airline_linecolumn_prefix = ' '
+
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#hunks#non_zero_only = 1
+" }}}
+
 " {{{2 YouCompleteMe
 Bundle 'Valloric/YouCompleteMe'
 
@@ -114,6 +132,7 @@ let g:DeleteTrailingWhitespace = 1
 " Color schemes {{{
 Bundle 'w0ng/vim-hybrid'
 Bundle 'chriskempson/vim-tomorrow-theme'
+Bundle 'jonathanfilip/vim-lucius'
 " }}}
 " }}}
 
@@ -138,6 +157,11 @@ set laststatus=2
 set noshowmode
 set noruler          " shows line,col in bottom right
 set showcmd        " shows the partial command in the lower right
+
+if has('gui_running')
+    set guifont=Menlo\ for\ Powerline:h12
+    set guioptions=egmrt
+endif
 " }}}
 " {{{2 <Tab> and Indenting
 set tabstop=4      " sets the length of the tab to 4 spaces
@@ -171,6 +195,10 @@ set t_RV= ttymouse=xterm2
 set autoread       " when a file is changed by a program other than vim while a buffer is open, automatically reload it
 
 set nostartofline  " makes it so G, gg, <c-d>, etc. don't move cursor to start of the line
+
+if exists('&macmeta')
+    set macmeta
+endif
 " }}}
 " }}}
 
