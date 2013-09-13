@@ -6,6 +6,9 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 "}}}
 
+" map leader up here so it takes effect
+let mapleader = ','
+
 " {{{1 Load Plug-Ins
 Bundle 'gmarik/vundle'
 
@@ -28,13 +31,13 @@ nnoremap <Leader>gb :Gbrowse@ryan<CR>
 
 " {{{2 Plug-ins with No Settings
 Bundle 'The-NERD-Commenter'
-Bundle 'AutoClose'
+"Bundle 'AutoClose'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Rename2'
 Bundle 'paradigm/TextObjectify'
 Bundle 'skammer/vim-css-color'
 Bundle 'suan/vim-instant-markdown'
 "Bundle 'flazz/vim-colorschemes'
-Bundle 'Lokaltog/vim-easymotion'
 " }}}
 
 " {{{2 Airline
@@ -49,10 +52,13 @@ let g:airline#extensions#branch#symbol = ' '
 let g:airline#extensions#readonly#symbol = ''
 let g:airline_linecolumn_prefix = ' '
 
+let g:airline_theme='solarized'
+
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline#extensions#tabline#enabled = 0
 " }}}
 
 " {{{2 YouCompleteMe
@@ -129,10 +135,20 @@ nnoremap <Leader>d$ :<C-u>%DeleteTrailingWhitespace<CR>
 let g:DeleteTrailingWhitespace = 1
 " }}}
 
+" {{{2 Easymotion
+" }}}
+
 " Color schemes {{{
-Bundle 'w0ng/vim-hybrid'
-Bundle 'chriskempson/vim-tomorrow-theme'
 Bundle 'jonathanfilip/vim-lucius'
+Bundle 'altercation/vim-colors-solarized'
+" }}}
+
+" {{{2 Syntax files
+Bundle 'hdima/python-syntax'
+let python_version_2 = 1
+let python_highlight_all = 1
+
+Bundle 'evanmiller/nginx-vim-syntax'
 " }}}
 " }}}
 
@@ -142,14 +158,13 @@ filetype plugin indent on
 syntax on
 
 set t_Co=256       " sets the number of colors to 256
+let g:solarized_termcolors=256
+colorscheme solarized
 set background=dark
-colorscheme lucius
-LuciusBlackLowContrast
 
-set number         " line numbers in gutter
+set relativenumber " line numbers in gutter
 set incsearch      " highlights as you search
 set hlsearch       " highlights search results
-"set cursorline     " highlights the line the cursor is on
 set nowrap         " disables word wrapping
 set scrolloff=3    " ensures that at least 3 lines of context are always visible
 
@@ -157,9 +172,10 @@ set laststatus=2
 set noshowmode
 set noruler          " shows line,col in bottom right
 set showcmd        " shows the partial command in the lower right
+set list listchars=tab:⇥⇥ " turns hard tabs into this character
 
 if has('gui_running')
-    set guifont=Menlo\ for\ Powerline:h12
+    set guifont=Sauce\ Code\ Powerline:h13
     set guioptions=egmrt
 endif
 " }}}
@@ -178,6 +194,7 @@ set wildignore=*.pyc " patterns to ignore for file name completion
 " {{{2 Folding
 set foldmethod=marker " allows setting a marker to specify where a fold occurs
 set foldmarker={{{,}}} " sets the fold marker to {{{ to start and }}} to end
+set foldlevel=99
 " }}}
 " {{{2 Buffers, Search
 set ignorecase     " ignores case for search
@@ -206,49 +223,35 @@ endif
 " Make j and k work better with wrapped lines
 map j gj
 map k gk
-" Easy running of last command
-nnoremap ,: :<Up>
-" Maps Ctrl-Tab to move through tabs forward
-nnoremap <silent> <c-Tab> :tabn<CR>
-" Maps Ctrl-t to create a new tab
-nnoremap <C-T> :tabnew<CR>
+
 " Sets Esc to remove highlighting when in normal mode
 nnoremap <esc> :noh<CR>
 
 " Maps Y to y$ to work like D and C
 map Y y$
 
-" Maps J/K to move 10 lines at a time
-nore J 10j
-nore K 10k
-
-" Remaps the old J to Ctrl-J
-nore <C-J> J
-
 " Keep search results in center of screen
 nnoremap <silent>n nzz
 nnoremap <silent>N Nzz
 
-" Makes * not move cursor to next match
-nnoremap * *<C-O>
-
-" Allows easy switching of buffers, opens buffer list and starts buffer switch
-nnoremap <Leader>b :ls<CR>:b<Space>
-nnoremap <Leader>v :ls<CR>:vert<Space>sb<Space>
-
-" Find/Replace all instances of last search
-nnoremap <Leader>S :%s///gc<Left><Left><Left>
-nnoremap <Leader>s :s///g<Left><Left>
+" Makes */N not move cursor to next match
+" Use <C-O> instead of N to not move cursor at all
+nnoremap * *N
+nnoremap # #N
 
 " Quick switch between alternate buffers
 noremap <Leader><Leader> <C-^>
 
-inoremap jj <Esc>
 " Easy switch between panes
 nnoremap <m-h> <c-w>h
 nnoremap <m-j> <c-w>j
 nnoremap <m-k> <c-w>k
 nnoremap <m-l> <c-w>l
+" Easy resizing of panes
+nnoremap <m-+> <c-w>+
+nnoremap <m--> <c-w>-
+nnoremap <m->> <c-w>>
+nnoremap <m-<> <c-w><
 "
 " Maps \cp to yank the current file path to the unnamed register
 nmap <Leader>cp :let @" = expand("%:p")<CR>
@@ -298,12 +301,6 @@ function! WrapToggle()
     endif
 endfunc
 map <silent><Leader>w :call WrapToggle()<CR>
-
-" sets \p to run the current script and log output to a file
-function! RunPython()
-    execute '!nohup python ' . expand("%:p") . ' >> ~/indicator_imports_tests.out 2>&1 &'
-endfunc
-map <Leader>p :call RunPython()<CR>
 " }}}
 
 " Auto Commands {{{1
@@ -314,6 +311,15 @@ au QuickFixCmdPost *grep* cwindow
 "au FileType htmldjango let g:autoclose_on=1
 "au InsertEnter,BufLeave,FocusLost *.py,*.html,*.md,*.js set nu
 "au InsertLeave,BufEnter,FocusGained *.py,*.html,*.md,*.js set rnu
+
+" Set cursorline and cursorcolumn (crosshairs) in active window only
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+    au WinLeave * setlocal nocursorline
+    au WinLeave * setlocal nocursorcolumn
+augroup END
 "}}}
 
 " Storing registers {{{
