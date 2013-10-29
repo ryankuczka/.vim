@@ -160,7 +160,9 @@ set background=dark
 hi Special term=bold ctermfg=107 gui=bold guifg=#cf6a4c
 hi clear SignColumn
 
-set relativenumber " line numbers in gutter
+" set both types of number to have abs number instead of zero in rnu
+set relativenumber
+set number
 set incsearch      " highlights as you search
 set hlsearch       " highlights search results
 set nowrap         " disables word wrapping
@@ -222,6 +224,11 @@ endif
 map j gj
 map k gk
 
+noremap J 10j
+noremap K 10k
+
+noremap <c-j> J
+
 " Sets Esc to remove highlighting when in normal mode
 nnoremap <esc> :noh<CR>
 
@@ -280,15 +287,15 @@ function! InsertDebugTrace()
     :w
 endfunction
 
-" Sets \n to toggle between rnu and nu
+"" Sets \n to toggle between rnu and nu
 function! NumberToggle()
     if(&relativenumber == 1)
-        set number
+        set norelativenumber
     else
         set relativenumber
     endif
 endfunc
-map <silent><Leader>n :call NumberToggle()<CR>
+map <silent><Leader><Leader>n :call NumberToggle()<CR>
 
 " Sets \w to toggle between wrap and nowrap
 function! WrapToggle()
@@ -298,17 +305,16 @@ function! WrapToggle()
         set wrap
     endif
 endfunc
-map <silent><Leader>w :call WrapToggle()<CR>
+map <silent><Leader><Leader>w :call WrapToggle()<CR>
 " }}}
 
 " Auto Commands {{{1
 " Automatically set html files to be htmldjango filetype
 au BufRead,BufNewFile *.html set filetype=htmldjango
 au BufRead,BufNewFile *.md set filetype=markdown
+au BufRead *nginx_ycharts* set filetype=nginx
+au BufRead *ycharts*cron.txt set filetype=crontab
 au QuickFixCmdPost *grep* cwindow
-"au FileType htmldjango let g:autoclose_on=1
-"au InsertEnter,BufLeave,FocusLost *.py,*.html,*.md,*.js set nu
-"au InsertLeave,BufEnter,FocusGained *.py,*.html,*.md,*.js set rnu
 
 " Set cursorline and cursorcolumn (crosshairs) in active window only
 augroup CursorLine
