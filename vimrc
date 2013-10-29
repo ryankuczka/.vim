@@ -31,13 +31,10 @@ nnoremap <Leader>gb :Gbrowse@ryan<CR>
 
 " {{{2 Plug-ins with No Settings
 Bundle 'The-NERD-Commenter'
-"Bundle 'AutoClose'
-Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Rename2'
 Bundle 'paradigm/TextObjectify'
 Bundle 'skammer/vim-css-color'
-Bundle 'suan/vim-instant-markdown'
-"Bundle 'flazz/vim-colorschemes'
+Bundle 'takac/vim-commandcaps'
 " }}}
 
 " {{{2 Airline
@@ -76,16 +73,25 @@ Bundle 'Yggdroot/indentLine'
 let g:indentLine_char = '┊'
 " }}}
 
+" {{{2 Instant Markdown
+Bundle 'suan/vim-instant-markdown'
+let g:instant_markdown_slow = 1
+" }}}
+
 " {{{2 Git Gutter
 Bundle 'airblade/vim-gitgutter'
 
 nmap <silent> <Leader>g :GitGutterToggle<CR>
+let g:gitgutter_signs = 1
+let g:gitgutter_realtime = 0
+let g:gitgutter_eager = 0
 " }}}
 
 " {{{2 Ack
 Bundle 'ack.vim'
 
-nnoremap <Leader>f :Ack<Space>
+nnoremap <Leader><Leader>f :Ack<Space>
+let g:ackprg="gg"
 " }}}
 
 " {{{2 Syntastic
@@ -93,8 +99,8 @@ Bundle 'scrooloose/syntastic'
 
 map <c-s> :SyntasticCheck<CR>
 let g:syntastic_mode_map = { 'mode': 'passive',
-						   \ 'active_filetypes': [],
-						   \ 'passive_filetypes': [] }
+                           \ 'active_filetypes': [],
+                           \ 'passive_filetypes': [] }
 
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
@@ -103,7 +109,7 @@ let g:syntastic_python_flake8_args='--ignore=E501,E128,E261,E262'
 " }}}
 
 " {{{2 CtrlP
-Bundle 'ctrlp.vim'
+Bundle 'kien/ctrlp.vim'
 
 let g:ctrlp_working_path_mode='ra'
 " }}}
@@ -116,17 +122,6 @@ map <c-n> :NERDTreeToggle<CR>
 map <c-l> :NERDTreeFind<CR>
 " }}}
 
-" {{{2 TagList
-Bundle 'taglist.vim'
-
-let Tlist_Ctags_Cmd='/usr/local/bin/ctags'
-let Tlist_GainFocus_On_ToggleOpen=1
-let Tlist_Enable_Fold_Column=0
-highlight MyTagListFileName guifg=#00d2ff ctermfg=blue
-highlight MyTagListTitle guifg=#ff0086 gui=bold ctermfg=red
-map ) :TlistToggle<CR>
-" }}}
-
 " {{{2 TrailingWhiteSpace
 Bundle 'ShowTrailingWhitespace'
 Bundle 'DeleteTrailingWhitespace'
@@ -136,6 +131,8 @@ let g:DeleteTrailingWhitespace = 1
 " }}}
 
 " {{{2 Easymotion
+Bundle 'Lokaltog/vim-easymotion'
+let g:EasyMotion_leader_key = '<Leader>'
 " }}}
 
 " Color schemes {{{
@@ -147,7 +144,6 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'hdima/python-syntax'
 let python_version_2 = 1
 let python_highlight_all = 1
-
 Bundle 'evanmiller/nginx-vim-syntax'
 " }}}
 " }}}
