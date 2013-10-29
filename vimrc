@@ -49,7 +49,7 @@ let g:airline#extensions#branch#symbol = ' '
 let g:airline#extensions#readonly#symbol = ''
 let g:airline_linecolumn_prefix = ' '
 
-let g:airline_theme='solarized'
+let g:airline_theme='jellybeans'
 
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
@@ -138,6 +138,7 @@ let g:EasyMotion_leader_key = '<Leader>'
 " Color schemes {{{
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'nanotech/jellybeans.vim'
 " }}}
 
 " {{{2 Syntax files
@@ -154,9 +155,10 @@ filetype plugin indent on
 syntax on
 
 set t_Co=256       " sets the number of colors to 256
-let g:solarized_termcolors=256
-colorscheme solarized
+colorscheme jellybeans
 set background=dark
+hi Special term=bold ctermfg=107 gui=bold guifg=#cf6a4c
+hi clear SignColumn
 
 set relativenumber " line numbers in gutter
 set incsearch      " highlights as you search
