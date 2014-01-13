@@ -26,15 +26,16 @@ nnoremap <Leader>gd :Gdiff<CR>
 " close the fugitive diff pane
 nnoremap <Leader>gD <C-W>h<C-W>c
 " open the current file on github
-nnoremap <Leader>gb :Gbrowse@ryan<CR>
+nnoremap <Leader>gb :<C-R>=line('.')<CR>Gbrowse@ryan<CR>
+vnoremap <Leader>gb :Gbrowse@ryan<CR>
 " }}}
 
 " {{{2 Plug-ins with No Settings
 Bundle 'The-NERD-Commenter'
 Bundle 'Rename2'
 Bundle 'paradigm/TextObjectify'
-Bundle 'skammer/vim-css-color'
 Bundle 'takac/vim-commandcaps'
+Bundle 'lilydjwg/colorizer'
 " }}}
 
 " {{{2 Airline
@@ -49,7 +50,7 @@ let g:airline#extensions#branch#symbol = ' '
 let g:airline#extensions#readonly#symbol = ''
 let g:airline_linecolumn_prefix = ' '
 
-let g:airline_theme='jellybeans'
+let g:airline_theme='luna'
 
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#empty_message = ''
@@ -68,6 +69,10 @@ set completeopt=menuone
 "let g:ycm_autoclose_preview_window_after_insertion=1
 " }}}
 
+" {{{2 Emmet
+Bundle 'mattn/emmet-vim'
+" }}}
+"
 " {{{2 IndentLine
 Bundle 'Yggdroot/indentLine'
 let g:indentLine_char = '┊'
@@ -106,12 +111,18 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_python_checkers=["flake8"]
 let g:syntastic_python_flake8_args='--ignore=E501,E128,E261,E262'
+let g:syntastic_javascript_checkers=["jshint"]
+let g:syntastic_javascript_jshint_args='--config /sites/ycharts/confs/developers/jshint_conf.json'
 " }}}
 
 " {{{2 CtrlP
 Bundle 'kien/ctrlp.vim'
+Bundle 'JazzCore/ctrlp-cmatcher'
 
 let g:ctrlp_working_path_mode='ra'
+let g:ctrlp_max_files=0
+let g:ctrlp_user_command=['.git', 'cd %s && git ls-files . -co --exclude-standard', 'ag %s -l --nocolor -g ""']
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch'}
 " }}}
 
 " {{{2 NERDTree
@@ -139,6 +150,13 @@ let g:EasyMotion_leader_key = '<Leader>'
 Bundle 'jonathanfilip/vim-lucius'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'nanotech/jellybeans.vim'
+Bundle 'sjl/badwolf'
+Bundle 'vim-scripts/Sorcerer'
+Bundle 'jnurmine/Zenburn'
+Bundle 'tejr/sahara'
+Bundle 'Pychimp/vim-luna'
+Bundle 'matthewtodd/vim-twilight'
+Bundle 'w0ng/vim-hybrid'
 " }}}
 
 " {{{2 Syntax files
@@ -155,9 +173,10 @@ filetype plugin indent on
 syntax on
 
 set t_Co=256       " sets the number of colors to 256
-colorscheme jellybeans
-set background=dark
-hi Special term=bold ctermfg=107 gui=bold guifg=#cf6a4c
+colorscheme hybrid
+"set background=dark
+"LuciusDarkLowContrast
+hi Special term=bold ctermfg=13 gui=bold guifg=#cc6666
 hi clear SignColumn
 
 " set both types of number to have abs number instead of zero in rnu
@@ -229,8 +248,8 @@ noremap K 10k
 
 noremap <c-j> J
 
-" Sets Esc to remove highlighting when in normal mode
-nnoremap <esc> :noh<CR>
+" Sets \ to remove highlighting when in normal mode
+nnoremap \ :noh<CR>
 
 " Maps Y to y$ to work like D and C
 map Y y$
@@ -243,6 +262,9 @@ nnoremap <silent>N Nzz
 " Use <C-O> instead of N to not move cursor at all
 nnoremap * *N
 nnoremap # #N
+
+" Make Q run the q macro instead of Ex mode
+nnoremap Q @q
 
 " Quick switch between alternate buffers
 noremap <Leader><Leader> <C-^>
@@ -259,7 +281,7 @@ nnoremap <m->> <c-w>>
 nnoremap <m-<> <c-w><
 "
 " Maps \cp to yank the current file path to the unnamed register
-nmap <Leader>cp :let @" = expand("%:p")<CR>
+nmap <Leader>cp :let @" = &filetype . ' ' . expand("%:p") . "\n"<CR>
 " }}}
 
 " {{{1 Functions
@@ -311,6 +333,7 @@ map <silent><Leader><Leader>w :call WrapToggle()<CR>
 " Auto Commands {{{1
 " Automatically set html files to be htmldjango filetype
 au BufRead,BufNewFile *.html set filetype=htmldjango
+au BufRead,BuFNewFile *.tpl set filetype=htmldjango
 au BufRead,BufNewFile *.md set filetype=markdown
 au BufRead *nginx_ycharts* set filetype=nginx
 au BufRead *ycharts*cron.txt set filetype=crontab
